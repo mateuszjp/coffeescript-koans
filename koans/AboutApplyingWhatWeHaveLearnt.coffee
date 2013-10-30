@@ -17,14 +17,18 @@ describe 'About Applying What We Have Learnt', ->
           break
       return hasInvalidOperation
 
-    expect(findNeedle(operations)).toBe(FILL_ME_IN)
+    expect(findNeedle(operations)).toBe(true)
 
 
   it 'should find needle in a haystack (functional)', ->
     # FILL_ME_IN solution goes in here
+    filtr = (a) -> (a.direction == 'FWD' && a.distance > 100)
+    findNeedle = (ops) -> 
+      return true for x in ops when filtr x
+      #(x for x in ops when filtr x)
     # HINT: one way of doing this would be a 'for in when' construct using sum and
     # filter functions, the existential operator is also useful
-    (expect findNeedle(operations)).toBe(FILL_ME_IN)
+    (expect findNeedle(operations)).toBe(true)
 
 
   it 'should add all the natural numbers below 1000 that are multiples of 3 or 5 (imperative)', ->
@@ -32,14 +36,22 @@ describe 'About Applying What We Have Learnt', ->
     for i in [1..1000]
       if (i % 3 == 0 || i % 5 == 0)
         total += i
-    expect(total).toBe(FILL_ME_IN)
+    expect(total).toBe(234168)
 
 
   it 'should add all the natural numbers below 1000 that are multiples of 3 or 5 (functional)', ->
     # FILL_ME_IN solution goes in here
+    filtr = (a) -> (a % 5 == 0 || a % 3 == 0)
+    sum_3_5 = (oo) -> (x for x in [1..oo] when filtr x)
+    l = sum_3_5(1000)
+    l = [1..1000].filter filtr
+    total = 0
+    sum = (a) -> total = total + a
+    sum x for x in l 
+    
     # HINT: one way of doing this would be a 'for in when' construct using sum and
     # filter functions
-    (expect FILL_ME_IN).toBe(234168)
+    (expect total).toBe(234168)
 
 
   it 'should find the sum of all the even valued terms in the fibonacci sequence which do not exceed four million (imperative)', ->
@@ -55,15 +67,25 @@ describe 'About Applying What We Have Learnt', ->
         sum += currentFib
       i+=1
 
-    expect(sum).toBe(FILL_ME_IN)
+    expect(sum).toBe(4613732)
 
 
   it 'should find the sum of all the even valued terms in the fibonacci sequence which do not exceed four million (functional)', ->
     # FILL_ME_IN solution goes in here
+    transform = (list) -> list.push list[list.length-1] + list[list.length-2]
+    list = [1,1]
+    #i = 0
+    transform(list) while list[list.length-1] <= 4000000 #and i+=1 > i
+    sum = 0
+    sum+= x for x in list[0..-2] when x % 2 == 0
+    #fib = [2,1,1] #-> [4, 1,2] -> [7, 2,3]
+    #i = 2
+    #fib[i] = fib[i-1] + fib[i-2]
+    #fib = [fib[0]+fib[1]+fib[2],fib[2],fib[1]+fib[2]]
     # HINT: one way of doing this would be to construct an array of Fibonacci numbers
     # using a function and a while loop, and then to filter it using an even function
-    expect(FILL_ME_IN).toBe(4613732)
-
+    #expect(fib[0]).toBe(4613732)
+    expect(sum).toBe(4613732)
 
 ###
 # UNCOMMENT FOR EXTRA CREDIT
